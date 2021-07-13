@@ -25,8 +25,8 @@ var (
 	// keys which do not match any non-ignored, exported fields in the destination.
 	EnableDecoderDisallowUnknownFields = false
 
-	// JsonReqInvalid json invalid when request is nil or request body is nil.
-	JsonReqInvalid = errors.New("invalid request")
+	// InvaildRequest request is nil or request body is nil.
+	InvaildRequest = errors.New("invalid request")
 )
 
 type jsonBinding struct{}
@@ -37,7 +37,7 @@ func (jsonBinding) Name() string {
 
 func (jsonBinding) Bind(req *http.Request, obj interface{}) error {
 	if req == nil || req.Body == nil {
-		return JsonReqInvalid
+		return InvaildRequest
 	}
 	return decodeJSON(req.Body, obj)
 }
